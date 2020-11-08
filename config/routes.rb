@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :template_tasks
+  resources :templates
   resources :courses
   resources :task_lists
   resources :users
