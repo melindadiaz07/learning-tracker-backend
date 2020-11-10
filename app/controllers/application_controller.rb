@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
     end
   
     def current_user
-      @user ||= User.find_by(id: user_id)
+      @user = User.find(id: user_id)
     end
   
     def token
