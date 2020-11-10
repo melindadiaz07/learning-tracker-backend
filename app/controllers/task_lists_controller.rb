@@ -1,7 +1,7 @@
 class TaskListsController < ApplicationController
  
   def index
-    render json: TaskList.all.to_json(:only => [:id, :tasks])
+    render json: TaskList.all.to_json(:only => [:id, :tasks, :course_id])
   end
   
   def show
@@ -11,6 +11,10 @@ class TaskListsController < ApplicationController
   def update
     taskList = TaskList.find(params[:id])
     taskList.update(tasks: params[:tasks])
+  end
+
+  def create
+    @task_list = TaskList.create(tasks: params[:tasks], course_id: params[:course_id])
   end
 
 end
