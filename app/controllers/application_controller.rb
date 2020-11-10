@@ -1,31 +1,17 @@
 class ApplicationController < ActionController::API
 
-    def issue_token(user)
-      JWT.encode({user_id: user.id}, 'secret_key', 'HS256')
-    end
-  
-    def current_user
-      @user = User.find(id: user_id)
-    end
-  
-    def token
-      request.headers['Authorization']
-    end
-  
-    def decoded_token
-      begin
-        # [{user_id: 1}, {algo: 'hs256'}]
-        JWT.decode(token, 'secret_key', true, { :algorithm => 'HS256' })
-      rescue JWT::DecodeError
-        [{}]
-      end
-    end
-  
-    def user_id
-      decoded_token.first['user_id']
-    end
-  
-    def logged_in?
-      !!current_user
-    end
+  def secret_key
+    "secret"
   end
+
+  # Given a payload, and a secret, return a token
+  def encode(payload)
+      JWT.encode(payload, secret_key, "HS256")
+  end
+
+  # Given a token, and secret key, return payload
+  def decode(token)
+      JWT.decode(token, secret_key, true, {algorithm: "HS256"})[0]
+  end
+  
+end

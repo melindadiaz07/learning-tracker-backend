@@ -5,11 +5,10 @@ Rails.application.routes.draw do
   resources :task_lists
   resources :users
 
-  
 
   namespace :api do
     namespace :v1 do
-      post '/auth', to: 'auth#create'
+      post '/login', to: 'auth#create'
       get '/mycourses', to: 'users#show'
     end
   end

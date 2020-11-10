@@ -1,14 +1,16 @@
 class Api::V1::UsersController < ApplicationController
 
-   def show
-    token = request.headers['Authorization']
-    user = User.find_by(id: token)
-    
-    if logged_in?
-      render json: { id: current_user.id, username: current_user.name }
-    else
-      render json: {error: 'No user could be found'}, status: 401
-      end
-    end
+  def index
+    render json: User.all
+  end
+
+  def show
+    token = request.headers["Authentication"].split(" ")[1]
+    render json: User.find(decode(token)["user_id"]).to_json(:include => { :courses => {
+      :include => { :task_list => {
+                      :only => [:id, :tasks] } },
+      :only => [:id, :subject]} })
+  end
+  
 
 end
