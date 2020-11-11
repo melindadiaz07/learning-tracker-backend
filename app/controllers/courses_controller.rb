@@ -5,8 +5,8 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    render json: @user.courses
+    @course = Course.find(params[:id])
+    render json: @course.to_json(:include => {:task_list => {:only => [:id, :tasks]}})
   end
 
   def create

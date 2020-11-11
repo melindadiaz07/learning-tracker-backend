@@ -11,6 +11,7 @@ class TaskListsController < ApplicationController
   def update
     taskList = TaskList.find(params[:id])
     taskList.update(tasks: params[:tasks])
+    render json: taskList.to_json()
   end
 
   def create
